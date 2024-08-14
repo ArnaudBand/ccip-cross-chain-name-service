@@ -34,17 +34,17 @@ export async function deployCrossChainNameService(): Promise<DeploymentResult> {
   const config: Config = await localSimulator.configuration();
 
   // Deploy the CrossChainNameServiceLookup contracts for source and destination chains
-  const CrossChainNameServiceLookupFactory = await ethers.getContractFactory('CrossChainNameServiceLookup');
-  const CrossChainNameServiceLookupSource = await CrossChainNameServiceLookupFactory.connect(deployer).deploy();
-  const CrossChainNameServiceLookupDestination = await CrossChainNameServiceLookupFactory.connect(deployer).deploy();
+  const CrossChainNameServiceLookup = await ethers.getContractFactory('CrossChainNameServiceLookup');
+  const CrossChainNameServiceLookupSource = await CrossChainNameServiceLookup.connect(deployer).deploy();
+  const CrossChainNameServiceLookupDestination = await CrossChainNameServiceLookup.connect(deployer).deploy();
 
   // Deploy the CrossChainNameServiceRegister contracts for source and destination chains
-  const CrossChainNameServiceRegisterFactory = await ethers.getContractFactory('CrossChainNameServiceRegister');
-  const CrossChainNameServiceRegisterSource = await CrossChainNameServiceRegisterFactory.connect(deployer).deploy(
+  const CrossChainNameServiceRegister = await ethers.getContractFactory('CrossChainNameServiceRegister');
+  const CrossChainNameServiceRegisterSource = await CrossChainNameServiceRegister.connect(deployer).deploy(
       config.sourceRouter_,
       CrossChainNameServiceLookupSource.target
   );
-  const CrossChainNameServiceRegisterDestination = await CrossChainNameServiceRegisterFactory.connect(deployer).deploy(
+  const CrossChainNameServiceRegisterDestination = await CrossChainNameServiceRegister.connect(deployer).deploy(
       config.destinationRouter_,
       CrossChainNameServiceLookupDestination.target
   );
